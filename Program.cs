@@ -33,6 +33,14 @@ app.MapGet("/proprietarios", (IProprietarioService proprietatioService) =>
   return Results.Ok(proprietarios);
 }).WithTags("Proprietario");
 
+app.MapGet("proprietarios/{id}", ([FromRoute] int id, IProprietarioService proprietarioService) =>
+{
+  var proprietario = proprietarioService.BuscaPorId(id);
+  if (proprietario == null)
+    return Results.NotFound();
+  return Results.Ok(proprietario);
+}).WithTags("Proprietario");
+
 app.MapPost("/proprietarios", ([FromBody] ProprietarioDTO proprietarioDTO, IProprietarioService proprietatioService) =>
 {
   var proprietario = new Proprietario
@@ -46,6 +54,21 @@ app.MapPost("/proprietarios", ([FromBody] ProprietarioDTO proprietarioDTO, IProp
 
   return Results.Created($"/proprietarios/{proprietario.Id}", proprietario);
 }).WithTags("Proprietario");
+
+app.MapPut("/proprietarios/{id}", ([FromRoute] int id, ProprietarioDTO proprietarioDTO, IProprietarioService proprietatioService) =>
+{
+  var proprietario = proprietatioService.BuscaPorId(id);
+  if (proprietario == null)
+    return Results.NotFound();
+
+  proprietario.Nome = proprietarioDTO.Nome;
+  proprietario.Telefone = proprietarioDTO.Telefone;
+  proprietario.Cpf = proprietarioDTO.Cpf;
+
+  proprietatioService.Atualizar(proprietario);
+
+  return Results.Ok(proprietario);
+}).RequireAuthorization().WithTags("Proprietario");
 #endregion
 
 #region App
