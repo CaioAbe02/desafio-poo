@@ -19,6 +19,9 @@ public abstract class Imovel
   [Required]
   public bool Alugado { get; protected set; } = default!;
 
+  [Required]
+  public int ValorAluguel { get; protected set; } = default!;
+
   [ForeignKey(nameof(Proprietario))]
   public int ProprietarioId { get; set; }
 
@@ -27,7 +30,7 @@ public abstract class Imovel
 
   public abstract string EstaAlugado();
   public string ContatoProprietario() => Proprietario.Contato();
-  public int CalcularAluguel(int valorBase) => valorBase;
+  public int CalcularAluguel(int meses) => ValorAluguel * meses;
 
   public string ObterEndereco() => Endereco;
   public int ObterNumero() => Numero;
@@ -35,6 +38,7 @@ public abstract class Imovel
 
   public void AlterarEndereco(string endereco) => Endereco = endereco;
   public void AlterarNumero(int numero) => Numero = numero;
+  public void AlterarValorAluguel(int valor) => ValorAluguel = valor;
   public void AlterarProprietarioId(int id) => ProprietarioId = id;
   public void Alugar() => Alugado = true;
   public void Liberar() => Alugado = false;
