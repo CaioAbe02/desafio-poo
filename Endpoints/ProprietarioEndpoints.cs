@@ -11,22 +11,22 @@ public static class ProprietarioEndpoints
   {
     var group = app.MapGroup("/proprietarios").WithTags("Proprietario");
 
-    group.MapGet("/proprietarios", (IProprietarioService proprietatioService) =>
+    group.MapGet("/", (IProprietarioService proprietatioService) =>
     {
       var proprietarios = proprietatioService.Todos();
 
       return Results.Ok(proprietarios);
-    }).WithTags("Proprietario");
+    });
 
-    group.MapGet("proprietarios/{id}", ([FromRoute] int id, IProprietarioService proprietarioService) =>
+    group.MapGet("/{id}", ([FromRoute] int id, IProprietarioService proprietarioService) =>
     {
       var proprietario = proprietarioService.BuscaPorId(id);
       if (proprietario == null)
         return Results.NotFound();
       return Results.Ok(proprietario);
-    }).WithTags("Proprietario");
+    });
 
-    group.MapPost("/proprietarios", ([FromBody] ProprietarioDTO proprietarioDTO, IProprietarioService proprietatioService) =>
+    group.MapPost("/", ([FromBody] ProprietarioDTO proprietarioDTO, IProprietarioService proprietarioService) =>
     {
       var proprietario = new Proprietario
       {
@@ -35,14 +35,14 @@ public static class ProprietarioEndpoints
         Cpf = proprietarioDTO.Cpf
       };
 
-      proprietatioService.Adicionar(proprietario);
+      proprietarioService.Adicionar(proprietario);
 
-      return Results.Created($"/proprietarios/{proprietario.Id}", proprietario);
-    }).WithTags("Proprietario");
+      return Results.Created($"/{proprietario.Id}", proprietario);
+    });
 
-    group.MapPut("/proprietarios/{id}", ([FromRoute] int id, ProprietarioDTO proprietarioDTO, IProprietarioService proprietatioService) =>
+    group.MapPut("/{id}", ([FromRoute] int id, ProprietarioDTO proprietarioDTO, IProprietarioService proprietarioService) =>
     {
-      var proprietario = proprietatioService.BuscaPorId(id);
+      var proprietario = proprietarioService.BuscaPorId(id);
       if (proprietario == null)
         return Results.NotFound();
 
@@ -50,9 +50,9 @@ public static class ProprietarioEndpoints
       proprietario.Telefone = proprietarioDTO.Telefone;
       proprietario.Cpf = proprietarioDTO.Cpf;
 
-      proprietatioService.Atualizar(proprietario);
+      proprietarioService.Atualizar(proprietario);
 
       return Results.Ok(proprietario);
-    }).WithTags("Proprietario");
+    });
   }
 }
