@@ -32,6 +32,7 @@ public static class ApartamentoEndpoints
       apartamento.AlterarEndereco(imovelDTO.Endereco);
       apartamento.AlterarNumero(imovelDTO.Numero);
       apartamento.AlterarProprietarioId(imovelDTO.ProprietarioId);
+      apartamento.AlterarValorAluguel(imovelDTO.ValorAluguel);
 
       imovelService.AdicionarApartamento(apartamento);
 
@@ -47,6 +48,7 @@ public static class ApartamentoEndpoints
       apartamento.AlterarEndereco(imovelDTO.Endereco);
       apartamento.AlterarNumero(imovelDTO.Numero);
       apartamento.AlterarProprietarioId(imovelDTO.ProprietarioId);
+      apartamento.AlterarValorAluguel(imovelDTO.ValorAluguel);
 
       imovelService.AdicionarApartamento(apartamento);
 
@@ -62,6 +64,40 @@ public static class ApartamentoEndpoints
       imovelService.ApagarApartamento(apartamento);
 
       return Results.NoContent();
+    });
+
+    group.MapGet("/{id}/aluguel", ([FromRoute] int id, [FromQuery] int meses, IImovelService imovelService) =>
+    {
+      var apartamento = imovelService.BuscaApartamentoPorId(id);
+      if (apartamento == null)
+        return Results.NotFound();
+      return Results.Ok(apartamento.CalcularAluguel(meses));
+    });
+
+    group.MapPut("/{id}/alugar", ([FromRoute] int id, IImovelService imovelService) =>
+    {
+      var apartamento = imovelService.BuscaApartamentoPorId(id);
+      if (apartamento == null)
+        return Results.NotFound();
+
+      apartamento.Alugar();
+
+      imovelService.AtualizarApartamento(apartamento);
+
+      return Results.Ok(apartamento);
+    });
+
+    group.MapPut("/{id}/liberar", ([FromRoute] int id, IImovelService imovelService) =>
+    {
+      var apartamento = imovelService.BuscaApartamentoPorId(id);
+      if (apartamento == null)
+        return Results.NotFound();
+
+      apartamento.Liberar();
+
+      imovelService.AtualizarApartamento(apartamento);
+
+      return Results.Ok(apartamento);
     });
   }
 }
