@@ -20,7 +20,7 @@ public static class ApartamentoEndpoints
 
     group.MapGet("/{id}", ([FromRoute] int id, IImovelService imovelService) =>
     {
-      var apartamento = imovelService.BuscaCasaPorId(id);
+      var apartamento = imovelService.BuscaApartamentoPorId(id);
       if (apartamento == null)
         return Results.NotFound();
       return Results.Ok(apartamento);
@@ -50,7 +50,7 @@ public static class ApartamentoEndpoints
       apartamento.AlterarProprietarioId(imovelDTO.ProprietarioId);
       apartamento.AlterarValorAluguel(imovelDTO.ValorAluguel);
 
-      imovelService.AdicionarApartamento(apartamento);
+      imovelService.AtualizarApartamento(apartamento);
 
       return Results.Ok(apartamento);
     });
