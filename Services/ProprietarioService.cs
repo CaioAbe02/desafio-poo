@@ -14,6 +14,11 @@ public class ProprietarioService : IProprietarioService
     _contexto = contexto;
   }
 
+  public Proprietario? BuscaPorId(int id)
+  {
+    return _contexto.Proprietarios.Where(p => p.Id == id).FirstOrDefault();
+  }
+
   public List<Proprietario> Todos()
   {
     return _contexto.Proprietarios.ToList();
@@ -22,6 +27,18 @@ public class ProprietarioService : IProprietarioService
   public void Adicionar(Proprietario proprietario)
   {
     _contexto.Proprietarios.Add(proprietario);
+    _contexto.SaveChanges();
+  }
+
+  public void Atualizar(Proprietario proprietario)
+  {
+    _contexto.Proprietarios.Update(proprietario);
+    _contexto.SaveChanges();
+  }
+
+  public void Apagar(Proprietario proprietario)
+  {
+    _contexto.Proprietarios.Remove(proprietario);
     _contexto.SaveChanges();
   }
 }
