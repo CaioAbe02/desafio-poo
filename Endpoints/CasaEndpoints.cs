@@ -38,19 +38,30 @@ public static class CasaEndpoints
       return Results.Created($"/{casa.Id}", casa);
     });
 
-    // group.MapPut("/{id}", ([FromRoute] int id, ImovelDTO imovelDTO, IImovelService imovelService) =>
-    // {
-    //   var casa = imovelService.BuscaCasaPorId(id);
-    //   if (casa == null)
-    //     return Results.NotFound();
+    group.MapPut("/{id}", ([FromRoute] int id, ImovelDTO imovelDTO, IImovelService imovelService) =>
+    {
+      var casa = imovelService.BuscaCasaPorId(id);
+      if (casa == null)
+        return Results.NotFound();
 
-    //   casa.AlterarEndereco(imovelDTO.Endereco);
-    //   casa.AlterarNumero(imovelDTO.Numero);
-    //   casa.AlterarProprietarioId(imovelDTO.ProprietarioId);
+      casa.AlterarEndereco(imovelDTO.Endereco);
+      casa.AlterarNumero(imovelDTO.Numero);
+      casa.AlterarProprietarioId(imovelDTO.ProprietarioId);
 
-    //   imovelService.Atualizar(proprietario);
+      imovelService.AtualizarCasa(casa);
 
-    //   return Results.Ok(casa);
-    // });
+      return Results.Ok(casa);
+    });
+
+    group.MapDelete("/{id}", ([FromRoute] int id, IImovelService imovelService) =>
+    {
+      var casa = imovelService.BuscaCasaPorId(id);
+      if (casa == null)
+        return Results.NotFound();
+
+      imovelService.ApagarCasa(casa);
+
+      return Results.NoContent();
+    });
   }
 }

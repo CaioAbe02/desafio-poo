@@ -27,8 +27,20 @@ public class ImovelService : IImovelService
 
   public void AdicionarCasa(Casa casa)
   {
-      _contexto.Casas.Add(casa);
-      _contexto.SaveChanges();
+    _contexto.Casas.Add(casa);
+    _contexto.SaveChanges();
+  }
+
+  public void AtualizarCasa(Casa casa)
+  {
+    _contexto.Casas.Update(casa);
+    _contexto.SaveChanges();
+  }
+
+  public void ApagarCasa(Casa casa)
+  {
+    _contexto.Casas.Remove(casa);
+    _contexto.SaveChanges();
   }
 
   public void AdicionarApartamento(Apartamento apartamento)
