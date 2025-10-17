@@ -35,5 +35,6 @@ public abstract class Imovel
 
   public void AlterarEndereco(string endereco) => Endereco = endereco;
   public void AlterarNumero(int numero) => Numero = numero;
-  public void AlterarStatusAluguel(bool status) => Alugado = status;
+  public void Alugar() => Alugado = true;
+  public void Liberar() => Alugado = false;
 }
