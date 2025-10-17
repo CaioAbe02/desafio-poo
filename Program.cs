@@ -27,6 +27,7 @@ var app = builder.Build();
 #region Endpoints
 app.MapProprietarioEndpoints();
 app.MapCasaEndpoints();
+app.MapApartamentoEndpoints();
 #endregion
 
 #region App

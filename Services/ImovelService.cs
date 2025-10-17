@@ -23,8 +23,6 @@ public class ImovelService : IImovelService
 
   public Casa? BuscaCasaPorId(int id) => _contexto.Casas.Find(id);
 
-  public Apartamento? BuscaApartamentoPorId(int id) => _contexto.Apartamentos.Find(id);
-
   public void AdicionarCasa(Casa casa)
   {
     _contexto.Casas.Add(casa);
@@ -43,16 +41,29 @@ public class ImovelService : IImovelService
     _contexto.SaveChanges();
   }
 
-  public void AdicionarApartamento(Apartamento apartamento)
+  public List<Apartamento> TodosApartamentos()
   {
-      _contexto.Apartamentos.Add(apartamento);
-      _contexto.SaveChanges();
+    return _contexto.Apartamentos.Include(i => i.Proprietario).ToList();
   }
 
-  public void ApagarImovel(Imovel imovel)
+  public Apartamento? BuscaApartamentoPorId(int id) => _contexto.Apartamentos.Find(id);
+
+  public void AdicionarApartamento(Apartamento apartamento)
   {
-      _contexto.Set<Imovel>().Remove(imovel);
-      _contexto.SaveChanges();
+    _contexto.Apartamentos.Add(apartamento);
+    _contexto.SaveChanges();
+  }
+
+  public void AtualizarApartamento(Apartamento apartamento)
+  {
+    _contexto.Apartamentos.Update(apartamento);
+    _contexto.SaveChanges();
+  }
+
+  public void ApagarApartamento(Apartamento apartamento)
+  {
+    _contexto.Apartamentos.Remove(apartamento);
+    _contexto.SaveChanges();
   }
 
   public void AlugarImovel(Imovel imovel)

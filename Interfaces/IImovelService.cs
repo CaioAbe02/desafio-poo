@@ -11,8 +11,11 @@ public interface IImovelService
   void AtualizarCasa(Casa casa);
   void ApagarCasa(Casa casa);
 
+  List<Apartamento> TodosApartamentos();
   Apartamento? BuscaApartamentoPorId(int id);
   void AdicionarApartamento(Apartamento apartamento);
+  void AtualizarApartamento(Apartamento apartamento);
+  void ApagarApartamento(Apartamento apartamento);
 
   void AlugarImovel(Imovel imovel);
   void LiberarImovel(Imovel imovel);
