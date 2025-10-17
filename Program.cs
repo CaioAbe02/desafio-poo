@@ -8,6 +8,7 @@ using DesafioPOO.Endpoints;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<IProprietarioService, ProprietarioService>();
+builder.Services.AddScoped<IImovelService, ImovelService>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -25,6 +26,7 @@ var app = builder.Build();
 
 #region Endpoints
 app.MapProprietarioEndpoints();
+app.MapCasaEndpoints();
 #endregion
 
 #region App
