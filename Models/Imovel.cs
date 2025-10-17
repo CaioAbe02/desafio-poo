@@ -11,13 +11,13 @@ public abstract class Imovel
 
   [Required]
   [StringLength(150)]
-  protected string Endereco { get; set; } = default!;
+  public string Endereco { get; protected set; } = default!;
 
   [Required]
-  protected int Numero { get; set; } = default!;
+  public int Numero { get; protected set; } = default!;
 
   [Required]
-  protected bool Alugado { get; set; } = default!;
+  public bool Alugado { get; protected set; } = default!;
 
   [ForeignKey(nameof(Proprietario))]
   public int ProprietarioId { get; set; }
